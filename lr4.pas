@@ -1,6 +1,4 @@
 Program lr4;
-//TODO комментарии по коду
-//TODO комментарии по тестовым манипуляциям с очередью
 type
   stackType = array[1..10] of integer;
   stackPtr = ^stackType;
@@ -26,9 +24,9 @@ begin
 end;
 procedure Error(k : Shortint); {Вывод ошибки по коду}
  begin
-   if (k=1) then begin
+   if (k=1) then begin {Переполнение очереди}
       writeln('Queue overflow');
-   end else if(k=2) then begin
+   end else if(k=2) then begin {Исчерпание очереди}
       writeln('Queue exhaustion');
    end;
  end;
@@ -70,27 +68,39 @@ procedure pop(s : stackPtr; var x: integer); {Получить значение 
 begin
   x := 0;
   i := 0;
+  {Создаем пустую очередь}
   new(Q);
   init();
+  {Проверяем что очередь пустая}
   checkEmpty();
+  {Добавляем в очередь 3 элемента}
   push(Q,11);
   push(Q,12);
   push(Q,20);
+  {Проверяем что в очереди есть элементы}
   checkEmpty();
+  {Извлекаем из очереди первый элемент}
   pop(Q,x);
   writeln('pop result:', x);
+  {Проверяем количество оставшихся элементов}
   checkEmpty();
+  {Извлекаем больше элементов чем есть в очереди}
   pop(Q,x);
   pop(Q,x);
   pop(Q,x);
+  {Проверяем что очередь пустая}
   checkEmpty();
+  {Добавляем один элемент и очищаем очередь}
   push(Q, 123);
   init();
+  {Проверяем что очередь пустая}
   checkEmpty();
+  {Добавляем больше 10 элементов чтобы вызвать переполнение}
   for i := 12 downto 1 do
   begin
     push(Q,i);
   end;
+  {Проверяем количество элементов}
   checkEmpty();
   writeln('Done!');
   readln();
