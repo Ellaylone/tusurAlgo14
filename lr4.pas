@@ -16,8 +16,8 @@ procedure checkEmpty(); {Проверка, является ли очередь 
 begin
 	if (size=0) then begin
 		writeln('Queue is empty');
-		end else if(exhausted=true) then begin
-				writeln('Queue is exhausted');
+	end else if(exhausted=true) then begin
+		writeln('Queue is exhausted');
 	end else if(size>first) then begin
 		writeln('Queue has ', size+1-first, ' element(s)');
 	end else if(size<first) then begin
@@ -48,20 +48,22 @@ begin
 		Error(1);
 	end;
 	s^[size] := c;
-		if (first=0) then begin
-				incVar(first);
-		end;
-		writeln('push size: ', size , ' first: ', first, ' value: ', s^[size]);
+	if (first=0) then begin
+		incVar(first);
+	end;
+	writeln('push size: ', size , ' first: ', first, ' value: ', s^[size]);
 	exhausted := false;
 end;
 procedure top(s : stackPtr; var x: integer); {Вывести значение первого элемента стека, присвоить его значение x}
 begin
 	x := s^[first];
-	writeln('pop size: ', size , ' first: ', first, ' value: ', s^[first]);
+	writeln('top size: ', size , ' first: ', first, ' value: ', s^[first]);
 end;
 procedure pop(s : stackPtr; var x: integer); {Получить значение первого элемента стека, удалить его из очереди, присвоить его значение x}
 begin
-	if (first=size) then begin
+	if (first=0) and (size=0) then begin
+		writeln('Queue is empty');
+	end else if(first=size) then begin
 		if(exhausted=true)then begin
 			Error(2);
 		end else begin
@@ -91,7 +93,7 @@ begin
 	checkEmpty();
 	{Извлекаем из очереди первый элемент}
 	pop(Q,x);
-	writeln('pop result:', x);
+	writeln('pop result: ', x);
 	{Проверяем количество оставшихся элементов}
 	checkEmpty();
 	{Извлекаем больше элементов чем есть в очереди}
@@ -112,6 +114,7 @@ begin
 	end;
 	{Проверяем количество элементов}
 	checkEmpty();
+	init();
 	writeln('Done!');
 	readln();
 end.
